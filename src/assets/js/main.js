@@ -10,9 +10,6 @@ $(async function () {
     let streamObj; // 預計用來存放 串流相關的物件(MediaStream)
     let front = true;
 
-    const img = new Image();
-    img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
-
     // 開啟 webcam
     openCam();
 
@@ -51,7 +48,8 @@ $(async function () {
     // });
 
 
-
+    const img = new Image();
+    img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
 
     const faceMesh = new FaceMesh({
         locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`, // 本地路徑
