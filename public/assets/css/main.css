@@ -219,6 +219,7 @@ p {
 .camera {
   position: relative;
   height: calc(var(--vh, 1vh) * 100);
+  background: #000;
   overflow: hidden;
 }
 
