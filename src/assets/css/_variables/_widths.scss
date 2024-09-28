@@ -1,0 +1,17 @@
+$width-min: (
+    desktop: 1280px,
+    laptop: 1024px,
+    tablet: 768px,
+    mobile: 375px) !default;
+$width-max: (
+    laptop: map-get($width-min, desktop) - 1px,
+    tablet: map-get($width-min, laptop) - 1px,
+    mobile: map-get($width-min, tablet) - 1px) !default;
+$width-min-desktop: map-get($width-min, desktop
+);
+$width-min-laptop: map-get($width-min, laptop);
+$width-min-tablet: map-get($width-min, tablet);
+$width-min-mobile: map-get($width-min, mobile);
+$width-max-laptop: map-get($width-max, laptop);
+$width-max-tablet: map-get($width-max, tablet);
+$width-max-mobile: map-get($width-max, mobile);

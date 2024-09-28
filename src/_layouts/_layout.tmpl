@@ -1,0 +1,54 @@
+<!doctype html>
+<html class="no-js" lang="zh-Hant-TW">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+
+    <meta property="og:title" content="">
+    <meta property="og:site_name" content="">
+    <meta property="og:url" content="">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+    <link rel="image_src" href="/assets/image/share-img.jpg">
+    <meta property="og:image" content="/assets/image/share-img.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="628">
+
+    <link rel="manifest" href="{{ '/site.json' | relativePath }}" crossorigin="use-credentials">
+    <link rel="shortcut icon" href="{{ '/favicon.ico' | relativePath }}" />
+    <link rel="apple-touch-icon" href="{{ '/assets/image/touch/logo.png' | relativePath }}">
+
+    {% block pluginsStyles %}{% endblock %}
+    <link rel="stylesheet" href="{{ '/assets/css/normalize.min.css' | relativePath }}">
+    <link rel="stylesheet" href="{{ '/assets/css/main.min.css' | relativePath }}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    {% block styles %}{% endblock %}
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+        </header>
+        <main class="main">
+            {% block content %}{% endblock %}
+        </main>
+        <footer class="footer">
+        </footer>
+    </div>
+    {% block popups %}{% endblock %}
+    <script src="{{ '/assets/lib/jquery/jquery-3.7.0.min.js' | relativePath }}"></script>
+    {% block pluginScripts %}{% endblock %}
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+@mixin text-overflow($clamp) {
+    display: -webkit-box;
+    max-height: 1em * 1.5 * $clamp;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-line-clamp: $clamp;
+    -webkit-box-orient: vertical;
+}

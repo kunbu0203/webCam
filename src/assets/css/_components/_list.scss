@@ -1,0 +1,29 @@
+ul,
+ol {
+    margin: 0;
+}
+
+// ol {
+//     margin: 0;
+//     padding-left: 30px;
+
+//     &>li>ol {
+//         list-style-type: none;
+//         padding-left: 32px;
+
+//         &>li {
+//             position: relative;
+//             counter-increment: section;
+
+//             &::before {
+//                 content: '('counter(section, decimal) ')';
+//                 position: absolute;
+//                 top: 0;
+//                 left: -5px;
+//                 transform: translateX(-100%);
+//             }
+//         }
+//     }
+
+//     @include breakpoint-down('mobile') {}
+// }

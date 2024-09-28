@@ -1,0 +1,31 @@
+{% extends './_layouts/_layout.tmpl' %}
+
+{% block content %}
+{# <div class="text"></div> #}
+<div class="camera">
+    <video class="camera-video" playsinline autoplay muted data-camera-video></video>
+    <canvas class="camera-screen" data-camera-canvas></canvas>
+    {# <div class="camera-taking" data-camera-taking>
+        <button>拍照</button>
+    </div>
+    <div class="camera-direction" data-camera-direction>
+        <button>翻轉</button>
+    </div> #}
+</div>
+{% endblock %}
+
+{% block popups %}
+{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block pluginScripts %}
+<script src="./assets/lib/mediapipe/face_mesh.js"></script>
+<script src="./assets/lib/mediapipe/camera_utils.js"></script>
+<script src="./assets/lib/mediapipe/drawing_utils.js"></script>
+{% endblock %}
+
+{% block scripts %}
+<script src="./assets/js/main.min.js"></script>
+{% endblock %}

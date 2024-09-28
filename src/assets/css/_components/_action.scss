@@ -1,0 +1,6 @@
+.action {
+    display: flex;
+    justify-content: center;
+
+    @include breakpoint-down('mobile') {}
+}

@@ -1,0 +1,14 @@
+{
+    "name": "project name",
+    "short_name": "project",
+    "icons": [
+        {
+            "src": "assets/image/touch/logo.png",
+            "type": "image/png",
+            "sizes": "500x500"
+        }
+    ],
+    "start_url": "/?utm_source=homescreen",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff"
+}

@@ -1,0 +1,36 @@
+@import "./_variables";
+@import "./_mixins";
+@import "./_default";
+
+@import "./_layout";
+@import "./_components";
+@import "./_utilities";
+
+.camera {
+    position: relative;
+    height: calc(var(--vh, 1vh) * 100);
+    overflow: hidden;
+
+    &-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        opacity: 0;
+    }
+
+    &-screen {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+    }
+
+    button {
+        position: relative;
+        background: #FFF;
+        z-index: 1;
+    }
+}

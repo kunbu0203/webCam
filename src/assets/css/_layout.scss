@@ -1,0 +1,41 @@
+@import "./_variables";
+@import "./_mixins";
+
+body {
+    min-height: calc(var(--vh, 1vh) * 100);
+    overflow-x: hidden;
+}
+
+
+.container {
+    min-height: calc(var(--vh, 1vh) * 100);
+    overflow: hidden;
+}
+
+/* ------------------------------- Header ------------------------------- */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    width: 100%;
+
+    @include breakpoint-down('tablet') {}
+}
+
+/* ------------------------------- Main ------------------------------- */
+.main {}
+
+/* ------------------------------- Footer ------------------------------- */
+.footer {}
+
+/* ------------------------------- Floating tool ------------------------------- */
+.gotop {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    z-index: 50;
+
+    @include breakpoint-down('mobile') {}
+}
