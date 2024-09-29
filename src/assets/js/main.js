@@ -4,23 +4,30 @@ $(function () {
         $('html').css('--vh', vh + 'px');
     }).trigger('resize.vh');
 
+    const img = new Image();
+    img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
+
+    let streamObj; // 預計用來存放 串流相關的物件(MediaStream)
+    let camera;
+
     let front = true;
+    let frameReady = false;
+    let cameraStart = false;
 
     // 開啟 webcam
     openCam('user');
     function openCam(type) {
-        console.log(type);
+        const $video = document.createElement('video');
+        $video.setAttribute('playsinline', '');
+        $video.setAttribute('autoplay', '');
+        $video.setAttribute('muted', '');
+        document.querySelector('.camera-video').appendChild($video);
 
-        let streamObj; // 預計用來存放 串流相關的物件(MediaStream)
-        let camera;
+        const $canvas = document.createElement('canvas');
+        document.querySelector('.camera-screen').appendChild($canvas);
 
-        const $video = document.querySelector(`[data-camera-video="${type}"]`);
-        const $canvas = document.querySelector(`[data-camera-canvas="${type}"]`);
         const ctx = $canvas.getContext('2d');
         let loadedDataHandler; // 全局變數存儲 loadeddata 事件處理程序
-
-        let frameReady = false;
-        let cameraStart = false;
 
         // 開啟視訊鏡頭，瀏覽器會跳詢問視窗
         navigator.mediaDevices.getUserMedia({
@@ -55,8 +62,6 @@ $(function () {
                 $video.addEventListener('loadeddata', loadedDataHandler, false);
             });
             await addLoadedDataHandler;
-            const img = new Image();
-            img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
 
             const faceMesh = new FaceMesh({
                 locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
@@ -115,7 +120,6 @@ $(function () {
 
                         // 根據面積調整圖片大小，面積越大，頭越近
                         const scale = faceArea / (window.innerWidth * window.innerHeight);
-                        // $('.text').text(scale);
 
                         // 計算頭頂的座標
                         const topOfHead = landmarks[10];
@@ -136,7 +140,6 @@ $(function () {
 
                     if (!frameReady) {
                         frameReady = true;
-                        $('.text').append('<br>frameReady');
                     }
                     if (frameReady && cameraStart) {
                         $('.loading').addClass('hide');
@@ -149,28 +152,31 @@ $(function () {
             camera.start();
             if (!cameraStart) {
                 cameraStart = true;
-                $('.text').append('<br>cameraStart');
             }
             if (frameReady && cameraStart) {
                 $('.loading').addClass('hide');
             }
 
-            $(`[data-camera-direction="${type}"]`).off('click.direction').on('click.direction', function () {
-                $('.loading').removeClass('hide');
-                streamObj.getTracks().forEach(track => track.stop());
-                if (camera) {
-                    camera.stop(); // 停止之前的 Camera
-                }
-                // front = !front;
-                console.log(type);
-
-                openCam(type === 'user' ? 'environment' : 'user');
-            });
         }).catch(function (error) {
             // 若無法取得畫面，執行 catch
             alert('取得相機訪問權限失敗: ', error.message, error.name);
         });
     }
+
+    $(`[data-camera-direction]`).off('click.direction').on('click.direction', function () {
+        $('.loading').removeClass('hide');
+        streamObj.getTracks().forEach(track => track.stop());
+        if (camera) {
+            camera.stop(); // 停止之前的 Camera
+        }
+        document.querySelector('.camera-video').innerHTML = '';
+        document.querySelector('.camera-screen').innerHTML = '';
+        frameReady = false;
+        cameraStart = false;
+
+        front = !front;
+        openCam(!front ? 'environment' : 'user');
+    });
 
     // // 初始化並啟動 MediaPipe Camera
     // function startMediaPipeCamera() {

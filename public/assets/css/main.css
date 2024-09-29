@@ -218,6 +218,7 @@ p {
 
 .camera {
   position: relative;
+  min-height: calc(var(--vh, 1vh) * 100);
   background: #000;
   overflow: hidden;
 }
@@ -234,6 +235,10 @@ p {
 
 .camera-screen {
   width: 390px;
+}
+
+.camera-screen canvas {
+  width: 100%;
 }
 
 .camera-taking {

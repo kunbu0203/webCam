@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="box">
-    <div class="camera">
+    {# <div class="camera" data-camera="user">
         <video class="camera-video" playsinline autoplay muted data-camera-video="user"></video>
         <canvas class="camera-screen" data-camera-canvas="user"></canvas>
         <div class="camera-taking" data-camera-taking>
@@ -11,14 +11,16 @@
         <div class="camera-direction" data-camera-direction="user">
             <button>翻轉</button>
         </div>
-    </div>
+    </div> #}
     <div class="camera">
-        <video class="camera-video" playsinline autoplay muted data-camera-video="environment"></video>
-        <canvas class="camera-screen" data-camera-canvas="environment"></canvas>
+        <div class="camera-video"></div>
+        <div class="camera-screen"></div>
+        {# <video class="camera-video" playsinline autoplay muted data-camera-video="environment"></video>
+        <canvas class="camera-screen" data-camera-canvas="environment"></canvas> #}
         <div class="camera-taking" data-camera-taking>
             <button>拍照</button>
         </div>
-        <div class="camera-direction" data-camera-direction="environment">
+        <div class="camera-direction" data-camera-direction>
             <button>翻轉</button>
         </div>
     </div>
@@ -26,7 +28,7 @@
         <span>loading...</span>
     </div>
 </div>
-<div class="text">text</div>
+{# <div class="text">text</div> #}
 {% endblock %}
 
 {% block popups %}

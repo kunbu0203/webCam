@@ -8,7 +8,7 @@
 
 .camera {
     position: relative;
-    // min-height: calc(var(--vh, 1vh) * 100);
+    min-height: calc(var(--vh, 1vh) * 100);
     background: #000;
     overflow: hidden;
 
@@ -29,6 +29,10 @@
         // left: 50%;
         // transform: translate(-50%, -50%);
         width: 390px;
+
+        canvas {
+            width: 100%;
+        }
     }
 
     &-taking {
