@@ -18,9 +18,6 @@ $(function () {
     let cameraStart = false;
 
     let gameStart = false;
-    let ballY1 = -100;
-    let ballY2 = -500;
-
     let point = 0;
 
     const faceMesh = new FaceMesh({
@@ -74,7 +71,7 @@ $(function () {
                     $canvas.width = $video.videoWidth;
                     $canvas.height = $video.videoHeight;
 
-                    foodW = $canvas.width * 0.2;
+                    foodW = $canvas.width * 0.15;
 
                     resolve();
                 };
@@ -83,6 +80,9 @@ $(function () {
                 $video.addEventListener('loadeddata', loadedDataHandler, false);
             });
             await addLoadedDataHandler;
+
+            let ballY1 = (foodW * -1);
+            let ballY2 = (foodW * -5);
 
             faceMesh.onResults(onResults);
             function onResults(results) {
@@ -96,18 +96,18 @@ $(function () {
                         ctx.scale(-1, 1);
                     }
                     ctx.drawImage(results.image, 0, 0, $canvas.width, $canvas.height);
-                    if (results.multiFaceLandmarks) {
-                        for (const landmarks of results.multiFaceLandmarks) {
-                            // drawConnectors(ctx, landmarks, FACEMESH_TESSELATION,
-                            //     { color: '#C0C0C070', lineWidth: 1 });
-                            // drawConnectors(ctx, landmarks, FACEMESH_RIGHT_EYE, { color: '#FF3030' });
-                            // drawConnectors(ctx, landmarks, FACEMESH_LEFT_EYE, { color: '#30FF30' });
-                            // drawConnectors(ctx, landmarks, FACEMESH_FACE_OVAL, { color: '#E0E0E0' });
-                            drawConnectors(ctx, landmarks, FACEMESH_LIPS, {
-                                color: '#E0E0E0'
-                            });
-                        }
-                    }
+                    // if (results.multiFaceLandmarks) {
+                    //     for (const landmarks of results.multiFaceLandmarks) {
+                    //         // drawConnectors(ctx, landmarks, FACEMESH_TESSELATION,
+                    //         //     { color: '#C0C0C070', lineWidth: 1 });
+                    //         // drawConnectors(ctx, landmarks, FACEMESH_RIGHT_EYE, { color: '#FF3030' });
+                    //         // drawConnectors(ctx, landmarks, FACEMESH_LEFT_EYE, { color: '#30FF30' });
+                    //         // drawConnectors(ctx, landmarks, FACEMESH_FACE_OVAL, { color: '#E0E0E0' });
+                    //         drawConnectors(ctx, landmarks, FACEMESH_LIPS, {
+                    //             color: '#E0E0E0'
+                    //         });
+                    //     }
+                    // }
                     if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
                         const landmarks = results.multiFaceLandmarks[0];
 
