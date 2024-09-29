@@ -9,6 +9,7 @@ $(async function () {
   let streamObj; // 預計用來存放 串流相關的物件(MediaStream)
   let front = true;
   let loadedDataHandler; // 全局變數存儲 loadeddata 事件處理程序
+  let camera;
 
   // 開啟 webcam
   openCam();
@@ -34,6 +35,8 @@ $(async function () {
       }
       // 重新定義並綁定 loadeddata 事件
       loadedDataHandler = function () {
+        console.log('loadeddata');
+
         // 將 video 標籤的影片寬高，顯示於 canvas 標籤上
         $canvas.width = $video.videoWidth;
         $canvas.height = $video.videoHeight;
@@ -65,18 +68,18 @@ $(async function () {
             ctx.scale(-1, 1);
           }
           ctx.drawImage(results.image, 0, 0, $canvas.width, $canvas.height);
-
-          // if (results.multiFaceLandmarks) {
-          //     for (const landmarks of results.multiFaceLandmarks) {
-          //         // drawConnectors(ctx, landmarks, FACEMESH_TESSELATION,
-          //         //     { color: '#C0C0C070', lineWidth: 1 });
-          //         drawConnectors(ctx, landmarks, FACEMESH_RIGHT_EYE, { color: '#FF3030' });
-          //         drawConnectors(ctx, landmarks, FACEMESH_LEFT_EYE, { color: '#30FF30' });
-          //         drawConnectors(ctx, landmarks, FACEMESH_FACE_OVAL, { color: '#E0E0E0' });
-          //         drawConnectors(ctx, landmarks, FACEMESH_LIPS, { color: '#E0E0E0' });
-          //     }
-          // }
-
+          if (results.multiFaceLandmarks) {
+            for (const landmarks of results.multiFaceLandmarks) {
+              // drawConnectors(ctx, landmarks, FACEMESH_TESSELATION,
+              //     { color: '#C0C0C070', lineWidth: 1 });
+              // drawConnectors(ctx, landmarks, FACEMESH_RIGHT_EYE, { color: '#FF3030' });
+              // drawConnectors(ctx, landmarks, FACEMESH_LEFT_EYE, { color: '#30FF30' });
+              // drawConnectors(ctx, landmarks, FACEMESH_FACE_OVAL, { color: '#E0E0E0' });
+              drawConnectors(ctx, landmarks, FACEMESH_LIPS, {
+                color: '#E0E0E0'
+              });
+            }
+          }
           if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
             const landmarks = results.multiFaceLandmarks[0];
 
@@ -114,7 +117,7 @@ $(async function () {
           ctx.restore();
         });
       }
-      const camera = new Camera($video, {
+      camera = new Camera($video, {
         onFrame: async () => {
           await faceMesh.send({
             image: $video
@@ -138,6 +141,10 @@ $(async function () {
 
   $('[data-camera-direction]').on('click', function () {
     streamObj.getTracks().forEach(track => track.stop());
+    if (camera) {
+      camera.stop(); // 停止之前的 Camera
+    }
+
     front = !front;
     openCam();
     // restartMediaPipeCamera(); // 重新啟動 MediaPipe Camera
