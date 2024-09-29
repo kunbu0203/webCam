@@ -11,9 +11,12 @@ $(async function () {
     let front = true;
     let loadedDataHandler; // 全局變數存儲 loadeddata 事件處理程序
     let camera;
-
-    // 開啟 webcam
-    openCam();
+    const img = new Image();
+    img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
+    img.onload = () => {
+        // 開啟 webcam
+        openCam();
+    };
 
     function openCam() {
         // 開啟視訊鏡頭，瀏覽器會跳詢問視窗
@@ -33,18 +36,15 @@ $(async function () {
             }
             // 重新定義並綁定 loadeddata 事件
             loadedDataHandler = function () {
-                console.log('loadeddata');
-
                 // 將 video 標籤的影片寬高，顯示於 canvas 標籤上
                 $canvas.width = $video.videoWidth;
                 $canvas.height = $video.videoHeight;
+
+                $('.camera-loading').addClass('hide');
             };
 
             // 綁定事件
             $video.addEventListener('loadeddata', loadedDataHandler, false);
-
-            const img = new Image();
-            img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
 
             const faceMesh = new FaceMesh({
                 locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`,
@@ -123,8 +123,8 @@ $(async function () {
                 onFrame: async () => {
                     await faceMesh.send({ image: $video });
                 },
-                width: 3024,
-                height: 2400,
+                width: $video.videoWidth,
+                height: $video.videoHeight,
                 facingMode: front ? 'user' : 'environment'
             });
             camera.start();
@@ -133,37 +133,13 @@ $(async function () {
         });
     }
 
-    // const aaa = new Promise((resolve, reject) => {
-
-    // })
-    // await aaa;
-
     $('[data-camera-direction]').on('click', function () {
+        $('.camera-loading').removeClass('hide');
         streamObj.getTracks().forEach(track => track.stop());
         if (camera) {
             camera.stop(); // 停止之前的 Camera
         }
         front = !front;
         openCam();
-        // restartMediaPipeCamera(); // 重新啟動 MediaPipe Camera
     });
-
-
-
-
-    // // 初始化並啟動 MediaPipe Camera
-    // function startMediaPipeCamera() {
-
-    // }
-
-    // // 停止並重新啟動 MediaPipe Camera
-    // function restartMediaPipeCamera() {
-    //     if (camera) {
-    //         camera.stop(); // 停止之前的 Camera
-    //     }
-    //     startMediaPipeCamera(); // 重新啟動
-    // }
-
-    // // 啟動 MediaPipe Camera
-    // startMediaPipeCamera();
 });
