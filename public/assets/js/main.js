@@ -45,7 +45,7 @@ $(async function () {
     streamObj.getTracks().forEach(track => track.stop());
     front = !front;
     openCam();
-    restartMediaPipeCamera(); // 重新啟動 MediaPipe Camera
+    // restartMediaPipeCamera(); // 重新啟動 MediaPipe Camera
   });
 
   const img = new Image();
