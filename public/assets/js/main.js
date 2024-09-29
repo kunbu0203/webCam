@@ -7,7 +7,7 @@ $(function () {
   img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
   const food = new Image();
   food.src = './assets/image/food.svg'; // 你想顯示的圖片路徑
-
+  const foodW = window.innerWidth * 3 * 0.1;
   let streamObj; // 預計用來存放 串流相關的物件(MediaStream)
   let camera;
   let front = true;
@@ -147,29 +147,29 @@ $(function () {
               const lipCenter = (upperLip.y + lowerLip.y) / 2;
               const leftMouthCorner = landmarks[61].x * $canvas.width;
               const rightMouthCorner = landmarks[291].x * $canvas.width;
-              const ballX = $canvas.width - 300;
-              const ballXCenter = ballX + 50;
-              const ballX2 = $canvas.width - 700;
-              const ballXCenter2 = ballX2 + 50;
+              const ballX = $canvas.width - foodW * 3;
+              const ballXCenter = ballX + foodW / 2;
+              const ballX2 = $canvas.width - foodW * 7;
+              const ballXCenter2 = ballX2 + foodW / 2;
               if (ballY1 > $canvas.height) {
-                ballY1 = -200;
+                ballY1 = foodW * -2;
               }
-              if (ballY1 + 50 > lipCenter * $canvas.height && leftMouthCorner < ballXCenter && rightMouthCorner > ballXCenter && mouthOpenDistance > 0.05) {
-                ballY1 = -200;
+              if (ballY1 + foodW / 2 > lipCenter * $canvas.height && leftMouthCorner < ballXCenter && rightMouthCorner > ballXCenter && mouthOpenDistance > 0.05) {
+                ballY1 = foodW * -2;
                 point++;
               }
               if (ballY2 > $canvas.height) {
-                ballY2 = -400;
+                ballY2 = foodW * -4;
               }
-              if (ballY2 + 50 > lipCenter * $canvas.height && leftMouthCorner < ballXCenter2 && rightMouthCorner > ballXCenter2 && mouthOpenDistance > 0.05) {
-                ballY2 = -400;
+              if (ballY2 + foodW / 2 > lipCenter * $canvas.height && leftMouthCorner < ballXCenter2 && rightMouthCorner > ballXCenter2 && mouthOpenDistance > 0.05) {
+                ballY2 = foodW * -4;
                 point++;
               }
               $('.camera-direction').hide();
-              ctx.drawImage(food, ballX, ballY1, 100, 100);
-              ballY1 += 10;
-              ctx.drawImage(food, ballX2, ballY2, 100, 100);
-              ballY2 += 8;
+              ctx.drawImage(food, ballX, ballY1, foodW, foodW);
+              ballY1 += foodW * 0.1;
+              ctx.drawImage(food, ballX2, ballY2, foodW, foodW);
+              ballY2 += foodW * 0.08;
             }
           }
           $('.text').text(point);
