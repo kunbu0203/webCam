@@ -21,6 +21,9 @@ $(function () {
     let frameReady = false;
     let cameraStart = false;
 
+    let videoW = 0;
+    let videoH = 0;
+
     function openCam() {
         cameraStart = false;
         frameReady = false;
@@ -47,6 +50,9 @@ $(function () {
                     // 將 video 標籤的影片寬高，顯示於 canvas 標籤上
                     $canvas.width = $video.videoWidth;
                     $canvas.height = $video.videoHeight;
+
+                    videoW = $video.videoWidth;
+                    videoH = $video.videoHeight;
 
                     resolve();
                 };
@@ -129,7 +135,7 @@ $(function () {
                 });
             }
 
-            $('.text').append(`<br>${$video.videoWidth}, ${$video.videoHeight}`)
+            $('.text').append(`<br>${videoW}, ${videoH}`);
             camera = new Camera($video, {
                 onFrame: async () => {
                     await faceMesh.send({ image: $video });
@@ -142,8 +148,8 @@ $(function () {
                         $('.camera-loading').addClass('hide');
                     }
                 },
-                width: $video.videoWidth,
-                height: $video.videoHeight,
+                width: videoW,
+                height: videoH,
                 facingMode: front ? 'user' : 'environment'
             });
             camera.start();
