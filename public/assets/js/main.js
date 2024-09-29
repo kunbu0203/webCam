@@ -116,14 +116,15 @@ $(async function () {
           ctx.restore();
         });
       }
+      alert(`${$video.videoWidth}, ${$video.videoHeight}`);
       camera = new Camera($video, {
         onFrame: async () => {
           await faceMesh.send({
             image: $video
           });
         },
-        width: $video.videoWidth,
-        height: $video.videoHeight,
+        width: 3024,
+        height: 2400,
         facingMode: front ? 'user' : 'environment'
       });
       camera.start();
