@@ -4,8 +4,8 @@ $(async function () {
     $('html').css('--vh', vh + 'px');
   }).trigger('resize.vh');
   const $video = document.querySelector('[data-camera-video]');
-  const $canvas = document.querySelector('[data-camera-canvas]');
-  const ctx = $canvas.getContext('2d');
+  // const $canvas = document.querySelector('[data-camera-canvas]');
+  // const ctx = $canvas.getContext('2d');
   let streamObj; // 預計用來存放 串流相關的物件(MediaStream)
   let front = true;
   let camera; // 存放 MediaPipe Camera 物件
@@ -35,8 +35,9 @@ $(async function () {
   const aaa = new Promise((resolve, reject) => {
     $video.addEventListener('play', function () {
       // 將 video 標籤的影片寬高，顯示於 canvas 標籤上
-      $canvas.width = $video.videoWidth;
-      $canvas.height = $video.videoHeight;
+      // $canvas.width = $video.videoWidth;
+      // $canvas.height = $video.videoHeight;
+
       resolve();
     }, false);
   });
@@ -45,22 +46,25 @@ $(async function () {
     streamObj.getTracks().forEach(track => track.stop());
     front = !front;
     openCam();
-    restartMediaPipeCamera(); // 重新啟動 MediaPipe Camera
+    // restartMediaPipeCamera(); // 重新啟動 MediaPipe Camera
   });
 
-  const img = new Image();
-  img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
+  // const img = new Image();
+  // img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
 
-  const faceMesh = new FaceMesh({
-    locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
-  });
-  faceMesh.setOptions({
-    maxNumFaces: 1,
-    refineLandmarks: true,
-    minDetectionConfidence: 0.5,
-    minTrackingConfidence: 0.5
-  });
-  faceMesh.onResults(onResults);
+  // const faceMesh = new FaceMesh({
+  //     locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`,
+  // });
+
+  // faceMesh.setOptions({
+  //     maxNumFaces: 1,
+  //     refineLandmarks: true,
+  //     minDetectionConfidence: 0.5,
+  //     minTrackingConfidence: 0.5,
+  // });
+
+  // faceMesh.onResults(onResults);
+
   function onResults(results) {
     requestAnimationFrame(() => {
       // 清空Canvas
@@ -147,5 +151,5 @@ $(async function () {
   }
 
   // 啟動 MediaPipe Camera
-  startMediaPipeCamera();
+  // startMediaPipeCamera();
 });
