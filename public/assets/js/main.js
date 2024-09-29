@@ -148,9 +148,9 @@ $(function () {
               const lipCenter = (upperLip.y + lowerLip.y) / 2;
               const leftMouthCorner = landmarks[61].x * $canvas.width;
               const rightMouthCorner = landmarks[291].x * $canvas.width;
-              const ballX = $canvas.width - foodW * 3;
+              const ballX = $canvas.width - foodW * 2;
               const ballXCenter = ballX + foodW / 2;
-              const ballX2 = $canvas.width - foodW * 7;
+              const ballX2 = $canvas.width - foodW * 6;
               const ballXCenter2 = ballX2 + foodW / 2;
               if (ballY1 > $canvas.height) {
                 ballY1 = foodW * -2;
@@ -203,6 +203,12 @@ $(function () {
     }).catch(function (error) {
       // 若無法取得畫面，執行 catch
       alert('取得相機訪問權限失敗: ', error.message, error.name);
+    });
+
+    // 拍照
+    $('[data-camera-taking]').off('click').on('click', function () {
+      resultImg = $canvas.toDataURL('image/jpeg', 1.0);
+      $('[data-pic]').attr('src', resultImg);
     });
   }
   $(`[data-camera-direction]`).off('click.direction').on('click.direction', function () {

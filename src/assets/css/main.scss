@@ -8,7 +8,7 @@
 
 .camera {
     position: relative;
-    min-height: calc(var(--vh, 1vh) * 100);
+    min-height: calc(var(--vh, 1vh) * 90);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -101,4 +101,16 @@
     bottom: 10px;
     right: 10px;
     color: #FFF;
+}
+
+.pic {
+    color: red;
+
+    img {
+        box-sizing: border-box;
+        display: block;
+        border: 2px solid red;
+        width: 100%;
+        min-height: 30px;
+    }
 }
