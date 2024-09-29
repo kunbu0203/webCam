@@ -31,7 +31,7 @@ $(async function () {
     }
 
     const aaa = new Promise((resolve, reject) => {
-        $video.addEventListener('play', function () {
+        $video.addEventListener('loadeddata', function () {
             // 將 video 標籤的影片寬高，顯示於 canvas 標籤上
             $canvas.width = $video.videoWidth;
             $canvas.height = $video.videoHeight;
@@ -127,13 +127,15 @@ $(async function () {
 
     // 初始化並啟動 MediaPipe Camera
     function startMediaPipeCamera() {
+        alert(`${$video.videoWidth}, ${$video.videoHeight}`);
+
         camera = new Camera($video, {
             onFrame: async () => {
                 await faceMesh.send({ image: $video });
             },
             width: $video.videoWidth,
             height: $video.videoHeight,
-            // facingMode: front ? 'user' : 'environment'
+            facingMode: front ? 'user' : 'environment'
         });
         camera.start();
     }
