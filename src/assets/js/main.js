@@ -4,16 +4,18 @@ $(function () {
         $('html').css('--vh', vh + 'px');
     }).trigger('resize.vh');
 
-    let streamObj; // 預計用來存放 串流相關的物件(MediaStream)
-    let camera;
     let front = true;
 
-
     // 開啟 webcam
-    openCam();
-    function openCam() {
-        const $video = document.querySelector('[data-camera-video]');
-        const $canvas = document.querySelector('[data-camera-canvas]');
+    openCam('user');
+    function openCam(type) {
+        console.log(type);
+
+        let streamObj; // 預計用來存放 串流相關的物件(MediaStream)
+        let camera;
+
+        const $video = document.querySelector(`[data-camera-video="${type}"]`);
+        const $canvas = document.querySelector(`[data-camera-canvas="${type}"]`);
         const ctx = $canvas.getContext('2d');
         let loadedDataHandler; // 全局變數存儲 loadeddata 事件處理程序
 
@@ -23,7 +25,7 @@ $(function () {
         // 開啟視訊鏡頭，瀏覽器會跳詢問視窗
         navigator.mediaDevices.getUserMedia({
             video: {
-                facingMode: front ? 'user' : 'environment',
+                facingMode: type,
                 width: {
                     ideal: 2400
                 },
@@ -71,7 +73,7 @@ $(function () {
                     // 清空Canvas
                     ctx.clearRect(0, 0, $canvas.width, $canvas.height);
                     ctx.save();
-                    if (front) {
+                    if (type === 'user') {
                         // 水平反轉
                         ctx.translate($canvas.width, 0);
                         ctx.scale(-1, 1);
@@ -137,12 +139,12 @@ $(function () {
                         $('.text').append('<br>frameReady');
                     }
                     if (frameReady && cameraStart) {
-                        $('.camera-loading').addClass('hide');
+                        // $('.camera-loading').addClass('hide');
                     }
                 },
                 width: $video.videoWidth,
                 height: $video.videoHeight,
-                facingMode: front ? 'user' : 'environment'
+                facingMode: type
             });
             camera.start();
             if (!cameraStart) {
@@ -150,25 +152,25 @@ $(function () {
                 $('.text').append('<br>cameraStart');
             }
             if (frameReady && cameraStart) {
-                $('.camera-loading').addClass('hide');
+                // $('.camera-loading').addClass('hide');
             }
 
+            $(`[data-camera-direction="${type}"]`).off('click.direction').on('click.direction', function () {
+                // $('.camera-loading').removeClass('hide');
+                streamObj.getTracks().forEach(track => track.stop());
+                if (camera) {
+                    camera.stop(); // 停止之前的 Camera
+                }
+                // front = !front;
+                console.log(type);
+
+                openCam(type === 'user' ? 'environment' : 'user');
+            });
         }).catch(function (error) {
             // 若無法取得畫面，執行 catch
             alert('取得相機訪問權限失敗: ', error.message, error.name);
         });
     }
-
-    $('[data-camera-direction]').on('click', function () {
-        $('.camera-loading').removeClass('hide');
-        streamObj.getTracks().forEach(track => track.stop());
-        if (camera) {
-            camera.stop(); // 停止之前的 Camera
-        }
-        front = !front;
-        openCam();
-        // restartMediaPipeCamera(); // 重新啟動 MediaPipe Camera
-    });
 
     // // 初始化並啟動 MediaPipe Camera
     // function startMediaPipeCamera() {

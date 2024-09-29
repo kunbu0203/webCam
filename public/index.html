@@ -43,17 +43,26 @@
         <main class="main">
             
 <div class="camera">
-    <video class="camera-video" playsinline autoplay muted data-camera-video></video>
-    <canvas class="camera-screen" data-camera-canvas></canvas>
+    <video class="camera-video" playsinline autoplay muted data-camera-video="user"></video>
+    <canvas class="camera-screen" data-camera-canvas="user"></canvas>
     <div class="camera-taking" data-camera-taking>
         <button>拍照</button>
     </div>
-    <div class="camera-direction" data-camera-direction>
+    <div class="camera-direction" data-camera-direction="user">
         <button>翻轉</button>
     </div>
-    <div class="camera-loading">
-        <span>loading...</span>
+    
+</div>
+<div class="camera">
+    <video class="camera-video" playsinline autoplay muted data-camera-video="environment"></video>
+    <canvas class="camera-screen" data-camera-canvas="environment"></canvas>
+    <div class="camera-taking" data-camera-taking>
+        <button>拍照</button>
     </div>
+    <div class="camera-direction" data-camera-direction="environment">
+        <button>翻轉</button>
+    </div>
+    
 </div>
 <div class="text">text</div>
 
