@@ -5,12 +5,18 @@ $(function () {
   }).trigger('resize.vh');
   const img = new Image();
   img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
+  const food = new Image();
+  food.src = './assets/image/food.svg'; // 你想顯示的圖片路徑
 
   let streamObj; // 預計用來存放 串流相關的物件(MediaStream)
   let camera;
   let front = true;
   let frameReady = false;
   let cameraStart = false;
+  let gameStart = false;
+  let ballY1 = -100;
+  let ballY2 = -500;
+  let point = 0;
   const faceMesh = new FaceMesh({
     locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
   });
@@ -122,7 +128,51 @@ $(function () {
             const imgW = faceWidth + scale * 10;
             // 根據比例繪製圖片
             ctx.drawImage(img, x - imgW / 2, y - imgW, imgW, imgW);
+
+            // 嘴巴張開偵測
+            const upperLip = landmarks[13];
+            const lowerLip = landmarks[14];
+            const mouthOpenDistance = Math.abs(upperLip.y - lowerLip.y);
+
+            // 設定一個閾值，當距離大於這個值時視為張嘴
+            if (mouthOpenDistance > 0.05) {
+              $('.camera-text').addClass('hide');
+              if (!gameStart) {
+                gameStart = true;
+              }
+            } else {
+              $('.camera-text').removeClass('hide');
+            }
+            if (gameStart) {
+              const lipCenter = (upperLip.y + lowerLip.y) / 2;
+              const leftMouthCorner = landmarks[61].x * $canvas.width;
+              const rightMouthCorner = landmarks[291].x * $canvas.width;
+              const ballX = $canvas.width - 300;
+              const ballXCenter = ballX + 50;
+              const ballX2 = $canvas.width - 700;
+              const ballXCenter2 = ballX2 + 50;
+              if (ballY1 > $canvas.height) {
+                ballY1 = -200;
+              }
+              if (ballY1 + 50 > lipCenter * $canvas.height && leftMouthCorner < ballXCenter && rightMouthCorner > ballXCenter && mouthOpenDistance > 0.05) {
+                ballY1 = -200;
+                point++;
+              }
+              if (ballY2 > $canvas.height) {
+                ballY2 = -400;
+              }
+              if (ballY2 + 50 > lipCenter * $canvas.height && leftMouthCorner < ballXCenter2 && rightMouthCorner > ballXCenter2 && mouthOpenDistance > 0.05) {
+                ballY2 = -400;
+                point++;
+              }
+              $('.camera-direction').hide();
+              ctx.drawImage(food, ballX, ballY1, 100, 100);
+              ballY1 += 10;
+              ctx.drawImage(food, ballX2, ballY2, 100, 100);
+              ballY2 += 8;
+            }
           }
+          $('.text').text(point);
           ctx.restore();
         });
       }
@@ -170,20 +220,4 @@ $(function () {
       openCam(!front ? 'environment' : 'user');
     }, 0);
   });
-
-  // // 初始化並啟動 MediaPipe Camera
-  // function startMediaPipeCamera() {
-
-  // }
-
-  // // 停止並重新啟動 MediaPipe Camera
-  // function restartMediaPipeCamera() {
-  //     if (camera) {
-  //         camera.stop(); // 停止之前的 Camera
-  //     }
-  //     startMediaPipeCamera(); // 重新啟動
-  // }
-
-  // // 啟動 MediaPipe Camera
-  // startMediaPipeCamera();
 });

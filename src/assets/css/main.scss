@@ -9,6 +9,9 @@
 .camera {
     position: relative;
     min-height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: #000;
     overflow: hidden;
 
@@ -52,7 +55,7 @@
         background: #FFF;
     }
 
-    &-loading {
+    &-text {
         position: absolute;
         top: 0;
         left: 0;
@@ -63,7 +66,7 @@
         align-items: center;
         font-size: 20px;
         color: #fff;
-        background-color: #000;
+        pointer-events: none;
 
         &.hide {
             display: none;
@@ -91,4 +94,11 @@
     &.hide {
         display: none;
     }
+}
+
+.text {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: #FFF;
 }
