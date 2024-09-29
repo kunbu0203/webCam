@@ -148,8 +148,8 @@ $(function () {
                         $('.camera-loading').addClass('hide');
                     }
                 },
-                width: 2400,
-                height: 3024,
+                width: 3024,
+                height: 2400,
                 facingMode: front ? 'user' : 'environment'
             });
             camera.start();
