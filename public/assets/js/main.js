@@ -45,23 +45,19 @@ $(function () {
       if (loadedDataHandler) {
         $video.removeEventListener('loadeddata', loadedDataHandler);
       }
-      const addLoadedDataHandler = new Promise((resolve, reject) => {
-        // 重新定義並綁定 loadeddata 事件
-        loadedDataHandler = function () {
-          // 將 video 標籤的影片寬高，顯示於 canvas 標籤上
-          $canvas.width = $video.videoWidth;
-          $canvas.height = $video.videoHeight;
 
-          // videoW = $video.videoWidth;
-          // videoH = $video.videoHeight;
+      // 重新定義並綁定 loadeddata 事件
+      loadedDataHandler = function () {
+        // 將 video 標籤的影片寬高，顯示於 canvas 標籤上
+        $canvas.width = $video.videoWidth;
+        $canvas.height = $video.videoHeight;
 
-          resolve();
-        };
+        // videoW = $video.videoWidth;
+        // videoH = $video.videoHeight;
+      };
 
-        // 綁定事件
-        $video.addEventListener('loadeddata', loadedDataHandler, false);
-      });
-      await addLoadedDataHandler;
+      // 綁定事件
+      $video.addEventListener('loadeddata', loadedDataHandler, false);
       const faceMesh = new FaceMesh({
         locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
       });
