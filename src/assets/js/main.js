@@ -40,12 +40,11 @@ $(async function () {
     })
     await aaa;
 
-
-    // $('[data-camera-direction]').on('click', function () {
-    //     streamObj.getTracks().forEach(track => track.stop());
-    //     front = !front;
-    //     openCam();
-    // });
+    $('[data-camera-direction]').on('click', function () {
+        streamObj.getTracks().forEach(track => track.stop());
+        front = !front;
+        openCam();
+    });
 
 
     const img = new Image();

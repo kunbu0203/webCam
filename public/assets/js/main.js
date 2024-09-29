@@ -40,13 +40,11 @@ $(async function () {
     }, false);
   });
   await aaa;
-
-  // $('[data-camera-direction]').on('click', function () {
-  //     streamObj.getTracks().forEach(track => track.stop());
-  //     front = !front;
-  //     openCam();
-  // });
-
+  $('[data-camera-direction]').on('click', function () {
+    streamObj.getTracks().forEach(track => track.stop());
+    front = !front;
+    openCam();
+  });
   const img = new Image();
   img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
 
