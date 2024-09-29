@@ -30,7 +30,7 @@ $(function () {
           ideal: 3200
         }
       }
-    }).then(function (stream) {
+    }).then(async function (stream) {
       streamObj = stream; // 將串流物件放在 streamObj 全域變數，方便後面關閉 webcam 時會用到
       $video.srcObject = stream; // video 標籤顯示 webcam 畫面
 
@@ -38,17 +38,19 @@ $(function () {
       if (loadedDataHandler) {
         $video.removeEventListener('loadeddata', loadedDataHandler);
       }
-      // 重新定義並綁定 loadeddata 事件
-      loadedDataHandler = function () {
-        console.log('loadeddata');
+      const addLoadedDataHandler = new Promise((resolve, reject) => {
+        // 重新定義並綁定 loadeddata 事件
+        loadedDataHandler = function () {
+          // 將 video 標籤的影片寬高，顯示於 canvas 標籤上
+          $canvas.width = $video.videoWidth;
+          $canvas.height = $video.videoHeight;
+          resolve();
+        };
 
-        // 將 video 標籤的影片寬高，顯示於 canvas 標籤上
-        $canvas.width = $video.videoWidth;
-        $canvas.height = $video.videoHeight;
-      };
-
-      // 綁定事件
-      $video.addEventListener('loadeddata', loadedDataHandler, false);
+        // 綁定事件
+        $video.addEventListener('loadeddata', loadedDataHandler, false);
+      });
+      await addLoadedDataHandler;
       const img = new Image();
       img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
 
@@ -135,8 +137,8 @@ $(function () {
             $('.camera-loading').addClass('hide');
           }
         },
-        width: 3024,
-        height: 2400,
+        width: $video.videoWidth,
+        height: $video.videoHeight,
         facingMode: front ? 'user' : 'environment'
       });
       camera.start();
