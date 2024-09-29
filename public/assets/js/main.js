@@ -44,6 +44,17 @@ $(async function () {
     streamObj.getTracks().forEach(track => track.stop());
     front = !front;
     openCam();
+    const camera = new Camera($video, {
+      onFrame: async () => {
+        await faceMesh.send({
+          image: $video
+        });
+      },
+      width: $video.videoWidth,
+      height: $video.videoHeight,
+      facingMode: front ? 'user' : 'environment'
+    });
+    camera.start();
   });
   const img = new Image();
   img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑

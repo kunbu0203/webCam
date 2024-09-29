@@ -44,6 +44,16 @@ $(async function () {
         streamObj.getTracks().forEach(track => track.stop());
         front = !front;
         openCam();
+
+        const camera = new Camera($video, {
+            onFrame: async () => {
+                await faceMesh.send({ image: $video });
+            },
+            width: $video.videoWidth,
+            height: $video.videoHeight,
+            facingMode: front ? 'user' : 'environment'
+        });
+        camera.start();
     });
 
 
