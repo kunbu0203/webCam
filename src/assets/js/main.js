@@ -3,7 +3,6 @@ $(function () {
         var vh = window.innerHeight * 0.01;
         $('html').css('--vh', vh + 'px');
     }).trigger('resize.vh');
-
     const $video = document.querySelector('[data-camera-video]');
     const $canvas = document.querySelector('[data-camera-canvas]');
     const ctx = $canvas.getContext('2d');
@@ -11,19 +10,12 @@ $(function () {
     let front = true;
     let loadedDataHandler; // 全局變數存儲 loadeddata 事件處理程序
     let camera;
-    const img = new Image();
-    img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
-    img.onload = () => {
-        // 開啟 webcam
-        openCam();
-    };
 
     let frameReady = false;
     let cameraStart = false;
 
-    // let videoW = 0;
-    // let videoH = 0;
-
+    // 開啟 webcam
+    openCam();
     function openCam() {
         cameraStart = false;
         frameReady = false;
@@ -32,44 +24,45 @@ $(function () {
         navigator.mediaDevices.getUserMedia({
             video: {
                 facingMode: front ? 'user' : 'environment',
-                width: { ideal: 2400 },
-                height: { ideal: 3200 }
+                width: {
+                    ideal: 2400
+                },
+                height: {
+                    ideal: 3200
+                }
             }
-        }).then(async function (stream) {
-            streamObj = stream;         // 將串流物件放在 streamObj 全域變數，方便後面關閉 webcam 時會用到
-            $video.srcObject = stream;  // video 標籤顯示 webcam 畫面
+        }).then(function (stream) {
+            streamObj = stream; // 將串流物件放在 streamObj 全域變數，方便後面關閉 webcam 時會用到
+            $video.srcObject = stream; // video 標籤顯示 webcam 畫面
 
             // 先移除之前的事件綁定
             if (loadedDataHandler) {
                 $video.removeEventListener('loadeddata', loadedDataHandler);
             }
-
             // 重新定義並綁定 loadeddata 事件
             loadedDataHandler = function () {
+                console.log('loadeddata');
+
                 // 將 video 標籤的影片寬高，顯示於 canvas 標籤上
                 $canvas.width = $video.videoWidth;
                 $canvas.height = $video.videoHeight;
-
-                // videoW = $video.videoWidth;
-                // videoH = $video.videoHeight;
             };
 
             // 綁定事件
             $video.addEventListener('loadeddata', loadedDataHandler, false);
+            const img = new Image();
+            img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
 
             const faceMesh = new FaceMesh({
-                locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`,
+                locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
             });
-
             faceMesh.setOptions({
                 maxNumFaces: 1,
                 refineLandmarks: true,
                 minDetectionConfidence: 0.5,
-                minTrackingConfidence: 0.5,
+                minTrackingConfidence: 0.5
             });
-
             faceMesh.onResults(onResults);
-
             function onResults(results) {
                 requestAnimationFrame(() => {
                     // 清空Canvas
@@ -81,7 +74,6 @@ $(function () {
                         ctx.scale(-1, 1);
                     }
                     ctx.drawImage(results.image, 0, 0, $canvas.width, $canvas.height);
-
                     if (results.multiFaceLandmarks) {
                         for (const landmarks of results.multiFaceLandmarks) {
                             // drawConnectors(ctx, landmarks, FACEMESH_TESSELATION,
@@ -89,15 +81,19 @@ $(function () {
                             // drawConnectors(ctx, landmarks, FACEMESH_RIGHT_EYE, { color: '#FF3030' });
                             // drawConnectors(ctx, landmarks, FACEMESH_LEFT_EYE, { color: '#30FF30' });
                             // drawConnectors(ctx, landmarks, FACEMESH_FACE_OVAL, { color: '#E0E0E0' });
-                            drawConnectors(ctx, landmarks, FACEMESH_LIPS, { color: '#E0E0E0' });
+                            drawConnectors(ctx, landmarks, FACEMESH_LIPS, {
+                                color: '#E0E0E0'
+                            });
                         }
                     }
-
                     if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
                         const landmarks = results.multiFaceLandmarks[0];
 
                         // 計算臉部的外接矩形範圍
-                        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+                        let minX = Infinity,
+                            minY = Infinity,
+                            maxX = -Infinity,
+                            maxY = -Infinity;
                         for (const point of landmarks) {
                             const x = point.x * $canvas.width;
                             const y = point.y * $canvas.height;
@@ -114,26 +110,24 @@ $(function () {
 
                         // 根據面積調整圖片大小，面積越大，頭越近
                         const scale = faceArea / (window.innerWidth * window.innerHeight);
-                        // $('.text').append(scale);
+                        // $('.text').text(scale);
 
                         // 計算頭頂的座標
                         const topOfHead = landmarks[10];
                         const x = topOfHead.x * $canvas.width;
                         const y = topOfHead.y * $canvas.height;
-
-                        const imgW = faceWidth + (scale * 10);
+                        const imgW = faceWidth + scale * 10;
                         // 根據比例繪製圖片
                         ctx.drawImage(img, x - imgW / 2, y - imgW, imgW, imgW);
                     }
-
                     ctx.restore();
                 });
             }
-
-            // $('.text').append(`<br>${videoW}, ${videoH}`);
             camera = new Camera($video, {
                 onFrame: async () => {
-                    await faceMesh.send({ image: $video });
+                    await faceMesh.send({
+                        image: $video
+                    });
 
                     if (!frameReady) {
                         frameReady = true;
@@ -156,7 +150,8 @@ $(function () {
                 $('.camera-loading').addClass('hide');
             }
 
-        }).catch(function (error) {     // 若無法取得畫面，執行 catch
+        }).catch(function (error) {
+            // 若無法取得畫面，執行 catch
             alert('取得相機訪問權限失敗: ', error.message, error.name);
         });
     }
@@ -169,5 +164,22 @@ $(function () {
         }
         front = !front;
         openCam();
+        // restartMediaPipeCamera(); // 重新啟動 MediaPipe Camera
     });
+
+    // // 初始化並啟動 MediaPipe Camera
+    // function startMediaPipeCamera() {
+
+    // }
+
+    // // 停止並重新啟動 MediaPipe Camera
+    // function restartMediaPipeCamera() {
+    //     if (camera) {
+    //         camera.stop(); // 停止之前的 Camera
+    //     }
+    //     startMediaPipeCamera(); // 重新啟動
+    // }
+
+    // // 啟動 MediaPipe Camera
+    // startMediaPipeCamera();
 });
