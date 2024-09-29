@@ -14,6 +14,16 @@ $(function () {
     let frameReady = false;
     let cameraStart = false;
 
+    const faceMesh = new FaceMesh({
+        locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
+    });
+    faceMesh.setOptions({
+        maxNumFaces: 1,
+        refineLandmarks: true,
+        minDetectionConfidence: 0.5,
+        minTrackingConfidence: 0.5
+    });
+
     // 開啟 webcam
     openCam('user');
     function openCam(type) {
@@ -63,15 +73,6 @@ $(function () {
             });
             await addLoadedDataHandler;
 
-            const faceMesh = new FaceMesh({
-                locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
-            });
-            faceMesh.setOptions({
-                maxNumFaces: 1,
-                refineLandmarks: true,
-                minDetectionConfidence: 0.5,
-                minTrackingConfidence: 0.5
-            });
             faceMesh.onResults(onResults);
             function onResults(results) {
                 requestAnimationFrame(() => {
@@ -175,7 +176,9 @@ $(function () {
         cameraStart = false;
 
         front = !front;
-        openCam(!front ? 'environment' : 'user');
+        setTimeout(() => {
+            openCam(!front ? 'environment' : 'user');
+        }, 1000);
     });
 
     // // 初始化並啟動 MediaPipe Camera
