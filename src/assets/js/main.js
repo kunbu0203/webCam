@@ -8,7 +8,7 @@ $(function () {
     img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
     const food = new Image();
     food.src = './assets/image/food.svg'; // 你想顯示的圖片路徑
-    const foodW = window.innerWidth * 3 * 0.1;
+    let foodW = 0;
 
     let streamObj; // 預計用來存放 串流相關的物件(MediaStream)
     let camera;
@@ -73,6 +73,8 @@ $(function () {
                     // 將 video 標籤的影片寬高，顯示於 canvas 標籤上
                     $canvas.width = $video.videoWidth;
                     $canvas.height = $video.videoHeight;
+
+                    foodW = $canvas.width * 0.08;
 
                     resolve();
                 };
