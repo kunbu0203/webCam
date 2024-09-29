@@ -8,6 +8,7 @@ $(async function () {
   const ctx = $canvas.getContext('2d');
   let streamObj; // 預計用來存放 串流相關的物件(MediaStream)
   let front = true;
+  let camera;
 
   // 開啟 webcam
   openCam();
@@ -42,9 +43,10 @@ $(async function () {
   await aaa;
   $('[data-camera-direction]').on('click', function () {
     streamObj.getTracks().forEach(track => track.stop());
+    camera.stop();
     front = !front;
     openCam();
-    const camera = new Camera($video, {
+    camera = new Camera($video, {
       onFrame: async () => {
         await faceMesh.send({
           image: $video
@@ -126,11 +128,19 @@ $(async function () {
         const imgW = faceWidth + scale * 10;
         // 根據比例繪製圖片
         ctx.drawImage(img, x - imgW / 2, y - imgW, imgW, imgW);
+        const upperLip = landmarks[13];
+        const lowerLip = landmarks[14];
+        const mouthOpenDistance = Math.abs(upperLip.y - lowerLip.y);
+
+        // 設定一個閾值，當距離大於這個值時視為張嘴
+        if (mouthOpenDistance > 0.05) {
+          console.log('Mouth opened');
+        }
       }
       ctx.restore();
     });
   }
-  const camera = new Camera($video, {
+  camera = new Camera($video, {
     onFrame: async () => {
       await faceMesh.send({
         image: $video
