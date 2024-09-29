@@ -168,10 +168,10 @@ $(function () {
 
     $('[data-camera-direction]').on('click', function () {
         $('.camera-loading').removeClass('hide');
+        streamObj.getTracks().forEach(track => track.stop());
         if (camera) {
             camera.stop(); // 停止之前的 Camera
         }
-        streamObj.getTracks().forEach(track => track.stop());
         front = !front;
         openCam();
     });
