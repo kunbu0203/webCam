@@ -18,6 +18,9 @@ $(function () {
         openCam();
     };
 
+    let frameReady = false;
+    let cameraStart = false;
+
     function openCam() {
         // 開啟視訊鏡頭，瀏覽器會跳詢問視窗
         navigator.mediaDevices.getUserMedia({
@@ -123,17 +126,31 @@ $(function () {
                 });
             }
 
+            alert(`${$video.videoWidth}, ${$video.videoHeight}`)
             camera = new Camera($video, {
                 onFrame: async () => {
                     await faceMesh.send({ image: $video });
+
+                    if (!frameReady) {
+                        frameReady = true;
+                        alert('frameReady');
+                    }
+                    if (frameReady && cameraStart) {
+                        $('.camera-loading').addClass('hide');
+                    }
                 },
                 width: $video.videoWidth,
                 height: $video.videoHeight,
                 facingMode: front ? 'user' : 'environment'
             });
             camera.start();
-
-            $('.camera-loading').addClass('hide');
+            if (!cameraStart) {
+                cameraStart = true;
+                alert('cameraStart');
+            }
+            if (frameReady && cameraStart) {
+                $('.camera-loading').addClass('hide');
+            }
 
         }).catch(function (error) {     // 若無法取得畫面，執行 catch
             alert('取得相機訪問權限失敗: ', error.message, error.name);
@@ -141,10 +158,13 @@ $(function () {
     }
 
     $('[data-camera-direction]').on('click', function () {
+        cameraStart = false;
+        frameReady = false;
         $('.camera-loading').removeClass('hide');
         streamObj.getTracks().forEach(track => track.stop());
         if (camera) {
             camera.stop(); // 停止之前的 Camera
+            camera = undefined;
         }
         front = !front;
         openCam();
