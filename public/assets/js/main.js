@@ -1,4 +1,4 @@
-$(async function () {
+$(function () {
   $(window).on('resize.vh', function () {
     var vh = window.innerHeight * 0.01;
     $('html').css('--vh', vh + 'px');
@@ -28,7 +28,7 @@ $(async function () {
           ideal: 3200
         }
       }
-    }).then(function (stream) {
+    }).then(async function (stream) {
       streamObj = stream; // 將串流物件放在 streamObj 全域變數，方便後面關閉 webcam 時會用到
       $video.srcObject = stream; // video 標籤顯示 webcam 畫面
 
@@ -36,16 +36,19 @@ $(async function () {
       if (loadedDataHandler) {
         $video.removeEventListener('loadeddata', loadedDataHandler);
       }
-      // 重新定義並綁定 loadeddata 事件
-      loadedDataHandler = function () {
-        // 將 video 標籤的影片寬高，顯示於 canvas 標籤上
-        $canvas.width = $video.videoWidth;
-        $canvas.height = $video.videoHeight;
-        $('.camera-loading').addClass('hide');
-      };
+      const addLoadedDataHandler = new Promise((resolve, reject) => {
+        // 重新定義並綁定 loadeddata 事件
+        loadedDataHandler = function () {
+          // 將 video 標籤的影片寬高，顯示於 canvas 標籤上
+          $canvas.width = $video.videoWidth;
+          $canvas.height = $video.videoHeight;
+          resolve();
+        };
 
-      // 綁定事件
-      $video.addEventListener('loadeddata', loadedDataHandler, false);
+        // 綁定事件
+        $video.addEventListener('loadeddata', loadedDataHandler, false);
+      });
+      await addLoadedDataHandler;
       const faceMesh = new FaceMesh({
         locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
       });
@@ -116,18 +119,18 @@ $(async function () {
           ctx.restore();
         });
       }
-      alert(`${$video.videoWidth}, ${$video.videoHeight}`);
       camera = new Camera($video, {
         onFrame: async () => {
           await faceMesh.send({
             image: $video
           });
         },
-        width: 3024,
-        height: 2400,
+        width: $video.videoWidth,
+        height: $video.videoHeight,
         facingMode: front ? 'user' : 'environment'
       });
       camera.start();
+      $('.camera-loading').addClass('hide');
     }).catch(function (error) {
       // 若無法取得畫面，執行 catch
       alert('取得相機訪問權限失敗: ', error.message, error.name);

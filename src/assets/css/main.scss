@@ -23,17 +23,28 @@
     }
 
     &-screen {
-        // position: relative;
-        // top: 50%;
-        // left: 50%;
-        // transform: translate(-50%, -50%);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         width: 100%;
     }
 
+    &-taking {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    &-direction {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+    }
+
     button {
-        // position: relative;
         background: #FFF;
-        // z-index: 1;
     }
 
     &-loading {

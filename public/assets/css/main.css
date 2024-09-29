@@ -234,7 +234,24 @@ p {
 }
 
 .camera-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
+}
+
+.camera-taking {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.camera-direction {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
 .camera button {
