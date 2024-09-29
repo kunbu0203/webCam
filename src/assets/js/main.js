@@ -74,7 +74,7 @@ $(function () {
                     $canvas.width = $video.videoWidth;
                     $canvas.height = $video.videoHeight;
 
-                    foodW = $canvas.width * 0.08;
+                    foodW = $canvas.width * 0.2;
 
                     resolve();
                 };

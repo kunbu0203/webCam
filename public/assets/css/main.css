@@ -237,7 +237,7 @@ p {
 }
 
 .camera-screen {
-  width: 390px;
+  width: 100%;
 }
 
 .camera-screen canvas {
