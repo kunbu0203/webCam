@@ -139,7 +139,7 @@ $(function () {
                         $('.text').append('<br>frameReady');
                     }
                     if (frameReady && cameraStart) {
-                        // $('.camera-loading').addClass('hide');
+                        $('.loading').addClass('hide');
                     }
                 },
                 width: $video.videoWidth,
@@ -152,11 +152,11 @@ $(function () {
                 $('.text').append('<br>cameraStart');
             }
             if (frameReady && cameraStart) {
-                // $('.camera-loading').addClass('hide');
+                $('.loading').addClass('hide');
             }
 
             $(`[data-camera-direction="${type}"]`).off('click.direction').on('click.direction', function () {
-                // $('.camera-loading').removeClass('hide');
+                $('.loading').removeClass('hide');
                 streamObj.getTracks().forEach(track => track.stop());
                 if (camera) {
                     camera.stop(); // 停止之前的 Camera
