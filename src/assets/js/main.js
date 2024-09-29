@@ -9,7 +9,7 @@ $(async function () {
     const ctx = $canvas.getContext('2d');
     let streamObj; // 預計用來存放 串流相關的物件(MediaStream)
     let front = true;
-    let camera;
+    let camera; // 存放 MediaPipe Camera 物件
 
     // 開啟 webcam
     openCam();
@@ -43,19 +43,9 @@ $(async function () {
 
     $('[data-camera-direction]').on('click', function () {
         streamObj.getTracks().forEach(track => track.stop());
-        camera.stop();
         front = !front;
         openCam();
-
-        camera = new Camera($video, {
-            onFrame: async () => {
-                await faceMesh.send({ image: $video });
-            },
-            width: $video.videoWidth,
-            height: $video.videoHeight,
-            facingMode: front ? 'user' : 'environment'
-        });
-        camera.start();
+        restartMediaPipeCamera(); // 重新啟動 MediaPipe Camera
     });
 
 
@@ -63,7 +53,7 @@ $(async function () {
     img.src = './assets/image/touch/logo.png'; // 你想顯示的圖片路徑
 
     const faceMesh = new FaceMesh({
-        locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`, // 本地路徑
+        locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`,
     });
 
     faceMesh.setOptions({
@@ -129,28 +119,33 @@ $(async function () {
                 const imgW = faceWidth + (scale * 10);
                 // 根據比例繪製圖片
                 ctx.drawImage(img, x - imgW / 2, y - imgW, imgW, imgW);
-
-                const upperLip = landmarks[13];
-                const lowerLip = landmarks[14];
-                const mouthOpenDistance = Math.abs(upperLip.y - lowerLip.y);
-
-                // 設定一個閾值，當距離大於這個值時視為張嘴
-                if (mouthOpenDistance > 0.05) {
-                    console.log('Mouth opened');
-                }
             }
 
             ctx.restore();
         });
     }
 
-    camera = new Camera($video, {
-        onFrame: async () => {
-            await faceMesh.send({ image: $video });
-        },
-        width: $video.videoWidth,
-        height: $video.videoHeight,
-        facingMode: front ? 'user' : 'environment'
-    });
-    camera.start();
+    // 初始化並啟動 MediaPipe Camera
+    function startMediaPipeCamera() {
+        camera = new Camera($video, {
+            onFrame: async () => {
+                await faceMesh.send({ image: $video });
+            },
+            width: $video.videoWidth,
+            height: $video.videoHeight,
+            facingMode: front ? 'user' : 'environment'
+        });
+        camera.start();
+    }
+
+    // 停止並重新啟動 MediaPipe Camera
+    function restartMediaPipeCamera() {
+        if (camera) {
+            camera.stop(); // 停止之前的 Camera
+        }
+        startMediaPipeCamera(); // 重新啟動
+    }
+
+    // 啟動 MediaPipe Camera
+    startMediaPipeCamera();
 });
