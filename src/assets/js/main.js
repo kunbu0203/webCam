@@ -3,22 +3,22 @@ $(function () {
         var vh = window.innerHeight * 0.01;
         $('html').css('--vh', vh + 'px');
     }).trigger('resize.vh');
-    const $video = document.querySelector('[data-camera-video]');
-    const $canvas = document.querySelector('[data-camera-canvas]');
-    const ctx = $canvas.getContext('2d');
-    let streamObj; // 預計用來存放 串流相關的物件(MediaStream)
-    let front = true;
-    let loadedDataHandler; // 全局變數存儲 loadeddata 事件處理程序
-    let camera;
 
-    let frameReady = false;
-    let cameraStart = false;
+    let streamObj; // 預計用來存放 串流相關的物件(MediaStream)
+    let camera;
+    let front = true;
+
 
     // 開啟 webcam
     openCam();
     function openCam() {
-        cameraStart = false;
-        frameReady = false;
+        const $video = document.querySelector('[data-camera-video]');
+        const $canvas = document.querySelector('[data-camera-canvas]');
+        const ctx = $canvas.getContext('2d');
+        let loadedDataHandler; // 全局變數存儲 loadeddata 事件處理程序
+
+        let frameReady = false;
+        let cameraStart = false;
 
         // 開啟視訊鏡頭，瀏覽器會跳詢問視窗
         navigator.mediaDevices.getUserMedia({
