@@ -19,6 +19,9 @@ $(function () {
   let frameReady = false;
   let cameraStart = false;
   function openCam() {
+    cameraStart = false;
+    frameReady = false;
+
     // 開啟視訊鏡頭，瀏覽器會跳詢問視窗
     navigator.mediaDevices.getUserMedia({
       video: {
@@ -108,7 +111,7 @@ $(function () {
 
             // 根據面積調整圖片大小，面積越大，頭越近
             const scale = faceArea / (window.innerWidth * window.innerHeight);
-            // $('.text').text(scale);
+            // $('.text').append(scale);
 
             // 計算頭頂的座標
             const topOfHead = landmarks[10];
@@ -121,7 +124,7 @@ $(function () {
           ctx.restore();
         });
       }
-      alert(`${$video.videoWidth}, ${$video.videoHeight}`);
+      $('.text').append(`<br>${$video.videoWidth}, ${$video.videoHeight}`);
       camera = new Camera($video, {
         onFrame: async () => {
           await faceMesh.send({
@@ -129,7 +132,7 @@ $(function () {
           });
           if (!frameReady) {
             frameReady = true;
-            alert('frameReady');
+            $('.text').append('<br>frameReady');
           }
           if (frameReady && cameraStart) {
             $('.camera-loading').addClass('hide');
@@ -142,7 +145,7 @@ $(function () {
       camera.start();
       if (!cameraStart) {
         cameraStart = true;
-        alert('cameraStart');
+        $('.text').append('<br>cameraStart');
       }
       if (frameReady && cameraStart) {
         $('.camera-loading').addClass('hide');
@@ -153,14 +156,12 @@ $(function () {
     });
   }
   $('[data-camera-direction]').on('click', function () {
-    cameraStart = false;
-    frameReady = false;
     $('.camera-loading').removeClass('hide');
-    streamObj.getTracks().forEach(track => track.stop());
     if (camera) {
       camera.stop(); // 停止之前的 Camera
-      camera = undefined;
     }
+
+    streamObj.getTracks().forEach(track => track.stop());
     front = !front;
     openCam();
   });
