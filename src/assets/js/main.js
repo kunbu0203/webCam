@@ -140,26 +140,26 @@ $(function () {
                 onFrame: async () => {
                     await faceMesh.send({ image: $video });
 
-                    if (!frameReady) {
-                        frameReady = true;
-                        $('.text').append('<br>frameReady');
-                    }
-                    if (frameReady && cameraStart) {
-                        $('.camera-loading').addClass('hide');
-                    }
+                    // if (!frameReady) {
+                    //     frameReady = true;
+                    //     $('.text').append('<br>frameReady');
+                    // }
+                    // if (frameReady && cameraStart) {
+                    //     $('.camera-loading').addClass('hide');
+                    // }
                 },
                 width: videoW,
                 height: videoH,
                 facingMode: front ? 'user' : 'environment'
             });
             camera.start();
-            if (!cameraStart) {
-                cameraStart = true;
-                $('.text').append('<br>cameraStart');
-            }
-            if (frameReady && cameraStart) {
-                $('.camera-loading').addClass('hide');
-            }
+            // if (!cameraStart) {
+            //     cameraStart = true;
+            //     $('.text').append('<br>cameraStart');
+            // }
+            // if (frameReady && cameraStart) {
+            //     $('.camera-loading').addClass('hide');
+            // }
 
         }).catch(function (error) {     // 若無法取得畫面，執行 catch
             alert('取得相機訪問權限失敗: ', error.message, error.name);
@@ -167,7 +167,7 @@ $(function () {
     }
 
     $('[data-camera-direction]').on('click', function () {
-        $('.camera-loading').removeClass('hide');
+        // $('.camera-loading').removeClass('hide');
         if (camera) {
             camera.stop(); // 停止之前的 Camera
         }
