@@ -178,7 +178,7 @@ $(function () {
         front = !front;
         setTimeout(() => {
             openCam(!front ? 'environment' : 'user');
-        }, 1000);
+        }, 0);
     });
 
     // // 初始化並啟動 MediaPipe Camera
