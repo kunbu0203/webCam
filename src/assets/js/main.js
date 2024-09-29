@@ -21,8 +21,8 @@ $(function () {
     let frameReady = false;
     let cameraStart = false;
 
-    let videoW = 0;
-    let videoH = 0;
+    // let videoW = 0;
+    // let videoH = 0;
 
     function openCam() {
         cameraStart = false;
@@ -51,8 +51,8 @@ $(function () {
                     $canvas.width = $video.videoWidth;
                     $canvas.height = $video.videoHeight;
 
-                    videoW = $video.videoWidth;
-                    videoH = $video.videoHeight;
+                    // videoW = $video.videoWidth;
+                    // videoH = $video.videoHeight;
 
                     resolve();
                 };
@@ -135,31 +135,31 @@ $(function () {
                 });
             }
 
-            $('.text').append(`<br>${videoW}, ${videoH}`);
+            // $('.text').append(`<br>${videoW}, ${videoH}`);
             camera = new Camera($video, {
                 onFrame: async () => {
                     await faceMesh.send({ image: $video });
 
-                    // if (!frameReady) {
-                    //     frameReady = true;
-                    //     $('.text').append('<br>frameReady');
-                    // }
-                    // if (frameReady && cameraStart) {
-                    //     $('.camera-loading').addClass('hide');
-                    // }
+                    if (!frameReady) {
+                        frameReady = true;
+                        $('.text').append('<br>frameReady');
+                    }
+                    if (frameReady && cameraStart) {
+                        $('.camera-loading').addClass('hide');
+                    }
                 },
-                width: videoW,
-                height: videoH,
+                width: 2400,
+                height: 3024,
                 facingMode: front ? 'user' : 'environment'
             });
             camera.start();
-            // if (!cameraStart) {
-            //     cameraStart = true;
-            //     $('.text').append('<br>cameraStart');
-            // }
-            // if (frameReady && cameraStart) {
-            //     $('.camera-loading').addClass('hide');
-            // }
+            if (!cameraStart) {
+                cameraStart = true;
+                $('.text').append('<br>cameraStart');
+            }
+            if (frameReady && cameraStart) {
+                $('.camera-loading').addClass('hide');
+            }
 
         }).catch(function (error) {     // 若無法取得畫面，執行 catch
             alert('取得相機訪問權限失敗: ', error.message, error.name);
@@ -167,7 +167,7 @@ $(function () {
     }
 
     $('[data-camera-direction]').on('click', function () {
-        // $('.camera-loading').removeClass('hide');
+        $('.camera-loading').removeClass('hide');
         if (camera) {
             camera.stop(); // 停止之前的 Camera
         }
