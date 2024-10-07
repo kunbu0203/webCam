@@ -1,0 +1,14 @@
+{
+    "name": "16茶 2024年末感謝祭",
+    "short_name": "16茶",
+    "icons": [
+        {
+            "src": "assets/image/touch/logo.png",
+            "type": "image/png",
+            "sizes": "500x500"
+        }
+    ],
+    "start_url": "/?utm_source=homescreen",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff"
+}
