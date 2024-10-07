@@ -1,0 +1,357 @@
+<!doctype html>
+<html class="no-js" lang="zh-Hant-TW">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        十六茶 2024年末感謝祭
+    </title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+
+    <meta property="og:title" content="">
+    <meta property="og:site_name" content="">
+    <meta property="og:url" content="">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+    <link rel="image_src" href="/assets/image/share-img.jpg">
+    <meta property="og:image" content="/assets/image/share-img.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="628">
+
+    <link rel="manifest" href="./site.json" crossorigin="use-credentials">
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="apple-touch-icon" href="./assets/image/touch/logo.png">
+
+    
+    <link rel="stylesheet" href="./assets/css/normalize.min.css">
+    <link rel="stylesheet" href="./assets/lib/overlayScrollbars/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="./assets/css/main.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="./assets/lib/swiper/swiper.min.css">
+<link rel="stylesheet" href="./assets/css/card.min.css">
+
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<!-- 若已登入，請在body加上.-isLogin -->
+
+<body>
+    <div class="loading -showPc">
+        <div class="loading-wrap">
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+        </div>
+    </div>
+    <div class="container -card">
+        <header class="header">
+            <div class="header-wrap">
+                <a href="./index.html" class="header-logo">
+                    <img src="./assets/image/layout/logo.svg" alt="">
+                </a>
+                <button class="header-burger" data-burger></button>
+                <div class="header-nav">
+                    <div class="nav">
+                        <div class="nav-user">
+                            <!-- 若無圖片請放預設圖：/assets/image/layout/user.svg -->
+                            <img src="./assets/image/other/user.jpg" alt="">
+                        </div>
+                        <div class="nav-content">
+                            <div class="board">
+                                <div class="board-wrap">
+                                    <div class="board-scroll">
+                                        <div class="board-head">
+                                            <div class="nav-name">🐸嗨嗨你好嗎</div>
+                                        </div>
+                                        <div class="board-content">
+                                            <div class="nav-links">
+                                                <a href="#">首頁</a>
+                                                <a href="#">製作年賀狀</a>
+                                                <!-- 已登入才顯示我的贈品 -->
+                                                <a href="#">我的贈品</a>
+                                                <a href="#">活動辦法</a>
+                                                <a href="#">得獎名單</a>
+                                                <a href="#">感謝祈福牆</a>
+                                                <a href="#">十六茶通路</a>
+                                            </div>
+                                            <div class="nav-social">
+                                                <a href="https://asahisoftdrinks.com.tw/16cha/" target="_blank" rel="noopener noreferrer">
+                                                    <img src="./assets/image/icon/16cha.png" alt="">
+                                                </a>
+                                                <a href="https://www.instagram.com/16cha_tw/" target="_blank" rel="noopener noreferrer">
+                                                    <img src="./assets/image/icon/instagram.png" alt="">
+                                                </a>
+                                                <a href="https://www.facebook.com/tw16asahi" target="_blank" rel="noopener noreferrer">
+                                                    <img src="./assets/image/icon/facebook.png" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="nav-logout">
+                                                <!-- <button class="btn -transparent">
+                                                    <span>登出</span>
+                                                </button> -->
+                                                <button class="btn -transparent" data-login>
+                                                    <span>登入</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="board-close" data-burger></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="main">
+            
+<div class="flow">
+    <div class="flow-back">
+        <a href="#"><span>返回</span></a>
+    </div>
+    <div class="flow-title">左右滑動，選擇一張喜歡的年賀狀</div>
+    <div class="flow-card">
+        <div class="card">
+            <div class="card-bg">
+                <img src="./assets/image/card/1.jpg" alt="">
+            </div>
+            <div class="card-input">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <div class="textarea">
+                    <div class="textarea-wrap">
+                        <div class="textarea-input" contenteditable="true" data-input></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flow-delete">
+        <button class="link" disabled data-clear>
+            <img src="./assets/image/icon/trash.svg" alt="">
+            <span>清除文字</span>
+        </button>
+    </div>
+    <div class="flow-slider hide">
+        <div>
+            <div class="swiper" data-slider-bg>
+                <div class="swiper-wrapper">
+                    
+                    <div class="swiper-slide">
+                        <label for="bg1" class="cardBg">
+                            <input type="radio" name="bg" id="bg1" checked data-card-bg="1">
+                            <img src="./assets/image/card/1-sm.jpg" alt="">
+                        </label>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <label for="bg2" class="cardBg">
+                            <input type="radio" name="bg" id="bg2"  data-card-bg="2">
+                            <img src="./assets/image/card/2-sm.jpg" alt="">
+                        </label>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <label for="bg3" class="cardBg">
+                            <input type="radio" name="bg" id="bg3"  data-card-bg="3">
+                            <img src="./assets/image/card/3-sm.jpg" alt="">
+                        </label>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <label for="bg4" class="cardBg">
+                            <input type="radio" name="bg" id="bg4"  data-card-bg="4">
+                            <img src="./assets/image/card/4-sm.jpg" alt="">
+                        </label>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <label for="bg5" class="cardBg">
+                            <input type="radio" name="bg" id="bg5"  data-card-bg="5">
+                            <img src="./assets/image/card/5-sm.jpg" alt="">
+                        </label>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <label for="bg6" class="cardBg">
+                            <input type="radio" name="bg" id="bg6"  data-card-bg="6">
+                            <img src="./assets/image/card/6-sm.jpg" alt="">
+                        </label>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <label for="bg7" class="cardBg">
+                            <input type="radio" name="bg" id="bg7"  data-card-bg="7">
+                            <img src="./assets/image/card/7-sm.jpg" alt="">
+                        </label>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <label for="bg8" class="cardBg">
+                            <input type="radio" name="bg" id="bg8"  data-card-bg="8">
+                            <img src="./assets/image/card/8-sm.jpg" alt="">
+                        </label>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <label for="bg9" class="cardBg">
+                            <input type="radio" name="bg" id="bg9"  data-card-bg="9">
+                            <img src="./assets/image/card/9-sm.jpg" alt="">
+                        </label>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <label for="bg10" class="cardBg">
+                            <input type="radio" name="bg" id="bg10"  data-card-bg="10">
+                            <img src="./assets/image/card/10-sm.jpg" alt="">
+                        </label>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <label for="bg11" class="cardBg">
+                            <input type="radio" name="bg" id="bg11"  data-card-bg="11">
+                            <img src="./assets/image/card/11-sm.jpg" alt="">
+                        </label>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <label for="bg12" class="cardBg">
+                            <input type="radio" name="bg" id="bg12"  data-card-bg="12">
+                            <img src="./assets/image/card/12-sm.jpg" alt="">
+                        </label>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <label for="bg13" class="cardBg">
+                            <input type="radio" name="bg" id="bg13"  data-card-bg="13">
+                            <img src="./assets/image/card/13-sm.jpg" alt="">
+                        </label>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <label for="bg14" class="cardBg">
+                            <input type="radio" name="bg" id="bg14"  data-card-bg="14">
+                            <img src="./assets/image/card/14-sm.jpg" alt="">
+                        </label>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <label for="bg15" class="cardBg">
+                            <input type="radio" name="bg" id="bg15"  data-card-bg="15">
+                            <img src="./assets/image/card/15-sm.jpg" alt="">
+                        </label>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="swiper-action -bg">
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </div>
+    <div class="flow-action">
+        
+        <button class="btn" disabled data-next><span>下一步</span></button>
+    </div>
+</div>
+
+        </main>
+    </div>
+
+    <!-- 橫式操作 -->
+    
+
+    <!-- 瀏覽器 -->
+    <div class="popup -lg" data-popup="browser" style="z-index: 999;">
+        <div class="popup-wrap">
+            <div class="browser">
+                <div class="browser-title">
+                    為確保活動順暢進行<br>
+                    請使用 Chrome 或 Safari 瀏覽器
+                </div>
+                <div class="browser-step">
+                    <div class="browser-item">複製連結</div>
+                    <div class="browser-item">開啟瀏覽器</div>
+                    <div class="browser-item">貼上連結</div>
+                    <div class="browser-item">進入網頁</div>
+                </div>
+                <div class="browser-action">
+                    <button class="btn -sm" data-copy>複製網址</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 登入 -->
+    <div class="login">
+        <div class="login-wrap">
+            <!-- <button class="socialBtn -fb">Facebook 登入</button> -->
+            <a href="./card.html" class="socialBtn -fb">Facebook 登入</a>
+            <button class="socialBtn -line">LINE 登入</button>
+        </div>
+    </div>
+    
+    
+
+    <script src="./assets/lib/jquery/jquery-3.7.0.min.js"></script>
+    <script src="./assets/lib/imagesloaded.pkgd.min.js"></script>
+    <script src="./assets/lib/ua-parser.min.js"></script>
+    <script src="./assets/lib/clipboard.min.js"></script>
+    <script src="./assets/lib/overlayScrollbars/jquery.overlayScrollbars.min.js"></script>
+    
+<script src="./assets/lib/swiper/swiper.min.js"></script>
+
+    <script src="./assets/js/main.min.js"></script>
+    
+<script src="./assets/js/card.min.js"></script>
+
+<script>
+let htmlContent;
+$('[data-input]').on({
+  input: function (e) {
+    htmlContent = $(e.target).html();
+    $('[data-clear], [data-next]').attr('disabled', !htmlContent);
+    $('.textarea').toggleClass('-hasText', !!htmlContent);
+    $('.textarea').toggleClass('-over', $('[data-input]').outerWidth() > $('.textarea-wrap').outerWidth());
+  },
+  paste: function (e) {
+    e.preventDefault();
+    // 獲取剪貼簿數據
+    const clipboardData = e.originalEvent.clipboardData || window.clipboardData;
+    if (clipboardData) {
+      // 從剪貼簿中獲取純文字
+      const text = clipboardData.getData('text/plain');
+
+      // 插入純文字
+      document.execCommand('insertText', false, text);
+    }
+  },
+  focus: function () {
+    $('.textarea').addClass('-focus');
+  },
+  blur: function () {
+    $('[data-input]').html(htmlContent);
+    $('.textarea').removeClass('-focus');
+    $('.textarea-wrap').scrollLeft(0);
+  }
+});
+$('[data-clear]').on('click', function () {
+  $('[data-input]').text('').trigger('input');
+});
+</script>
+
+
+</body>
+
+</html>
