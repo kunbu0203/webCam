@@ -289,7 +289,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  color: rgba(99, 163, 120, 0.5);
+  color: red;
   pointer-events: none;
 }
 
