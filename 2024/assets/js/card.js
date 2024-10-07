@@ -34,4 +34,38 @@
     const val = $(e.target).data('cardBg');
     bgSlider.slideTo(val - 1);
   });
+  let htmlContent;
+  let num = 0;
+  $('[data-input]').on({
+    input: function (e) {
+      htmlContent = $(e.target).html();
+      num = num === 0 ? 1 : 0;
+      $(this).css('height', 'calc(100% + ' + num + 'px)');
+      $('[data-clear], [data-next]').attr('disabled', !htmlContent);
+      $('.textarea').toggleClass('-hasText', !!htmlContent);
+      $('.textarea').toggleClass('-over', $('[data-input]').outerWidth() > $('.textarea-wrap').outerWidth());
+    },
+    paste: function (e) {
+      e.preventDefault();
+      // 獲取剪貼簿數據
+      const clipboardData = e.originalEvent.clipboardData || window.clipboardData;
+      if (clipboardData) {
+        // 從剪貼簿中獲取純文字
+        const text = clipboardData.getData('text/plain');
+
+        // 插入純文字
+        document.execCommand('insertText', false, text);
+      }
+    },
+    focus: function () {
+      $('.textarea').addClass('-focus');
+    },
+    blur: function () {
+      $('.textarea').removeClass('-focus');
+      $('.textarea-wrap').scrollLeft(0);
+    }
+  });
+  $('[data-clear]').on('click', function () {
+    $('[data-input]').text('').trigger('input');
+  });
 })();
